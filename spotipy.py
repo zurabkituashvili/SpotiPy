@@ -106,6 +106,37 @@ class SpotiPy:
 
 
     def loadFromFile(self):
-        pass
+            def loadFromFile(self):
+        with open("artists.txt", "r") as f:
+            for line in f:
+                line = line.strip()
+                line = line.split(",")
+                artist = Artist(line[0], line[1], line[2])
+                self.__artists.append(artist)
+
+        with open("albums.txt", "r") as f:
+            for line in f:
+                line = line.strip()
+                line = line.split(",")
+                album = Album(line[0], line[1], line[2], line[3])
+                for i in self.__artists:
+                    if i.getFirstName() == line[3]:
+                        i.addAlbums(album)
+
+        with open("songs.txt", "r") as f:
+            for line in f:
+                line = line.strip()
+                line = line.split(",")
+                song = Song(line[0], line[1], line[2], line[3])
+                for i in self.__artists:
+                    if i.getFirstName() == line[3]:
+                        if line[2] == "single":
+                            i.addSingles(song)
+                        else:
+                            for j in i.getAlbums():
+                                if j.getName() == line[2]:
+                                    j.addSongs(song)
+
+
 
 
